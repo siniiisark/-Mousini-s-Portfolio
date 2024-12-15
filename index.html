@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Verdana', sans-serif;
+            background: linear-gradient(145deg, #0b132b, #1c2541, #3a506b);
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
+            color: #dfe6e9;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        #background-stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: twinkle 4s ease infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        #heart-cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            width: 20px;
+            height: 20px;
+            transition: transform 0.1s ease;
+            fill: #4DFFFF; /* Cyan-like space color */
+        }
+
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(15, 23, 42, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 1s;
+        }
+        
+        #splash-text {
+            font-size: 3vw;
+            font-weight: bold;
+            color: #e9eef0;
+            text-shadow: 0 0 10px #141515;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1.5s, transform 1.5s;
+        }
+
+        #main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .section h1 {
+            font-size: 2.5rem;
+            color: #f1f1f1;
+        }
+
+        .section p {
+            font-size: 1.2rem;
+            color: #c0c7d1;
+        }
+
+        .menu-icon {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 2rem;
+            color: #dfe6e9;
+           
+            z-index: 200;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            height: 100%;
+            width: 250px;
+            background-color: #1c2541;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: left 0.3s;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #dfe6e9;
+            font-size: 1.5rem;
+            margin: 15px 0;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #f3f7f8;
+        }
+
+        nav.active {
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="background-stars"></div>
+    <svg id="heart-cursor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </svg>
+    <div id="intro-overlay">
+        <div id="splash-text">Mousini's Portfolio</div>
+    </div>
+
+    <div class="menu-icon" id="menu-toggle">☰</div>
+
+    <nav id="nav-menu">
+        
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+       
+    </nav>
+
+    <div id="main-content">
+        <div class="section" id="home">
+            <h1>Portfolio</h1>
+            
+        </div>
+
+        
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const backgroundStars = document.getElementById('background-stars');
+            const introOverlay = document.getElementById('intro-overlay');
+            const splashText = document.getElementById('splash-text');
+            const mainContent = document.getElementById('main-content');
+            const menuToggle = document.getElementById('menu-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            const heartCursor = document.getElementById('heart-cursor');
+
+            document.addEventListener('mousemove', (e) => {
+                heartCursor.style.left = `${e.clientX - 25}px`;
+                heartCursor.style.top = `${e.clientY - 25}px`;
+            });
+
+            // Generate stars
+            const createStars = () => {
+                for (let i = 0; i < 200; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    const size = Math.random() * 3;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    star.style.animationDuration = `${3 + Math.random() * 3}s`;
+                    backgroundStars.appendChild(star);
+                }
+            };
+
+            createStars();
+
+            // Intro animation
+            setTimeout(() => {
+                splashText.style.opacity = '1';
+                splashText.style.transform = 'scale(1)';
+            }, 500);
+
+            setTimeout(() => {
+                introOverlay.style.opacity = '0';
+            }, 2500);
+
+            setTimeout(() => {
+                mainContent.style.display = 'block';
+                mainContent.style.opacity = '1';
+                introOverlay.style.display = 'none';
+            }, 3000);
+
+            // Toggle navigation menu
+            menuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
