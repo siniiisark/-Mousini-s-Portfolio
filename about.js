@@ -7,16 +7,16 @@ function createStars() {
         const star = document.createElement('div');
         star.classList.add('star');
 
-       
+        
         star.style.left = `${Math.random() * 100}%`;
         star.style.top = `${Math.random() * 100}%`;
 
-      
+       
         const size = Math.random() * 3;
         star.style.width = `${size}px`;
         star.style.height = `${size}px`;
 
-     
+       
         const duration = 26 + Math.random() * 26;
         star.style.animationDuration = `${duration}s`;
 
@@ -37,8 +37,8 @@ const texts = [
     'Blockchain Technology',
     'Game Dev using JavaScript', 
     'UI UX Enthusiast',
-    'Learner',
-    'Student'
+    'Student',
+    'Learner'
 ];
 
 const typingElement = document.getElementById('typing-text-main');
@@ -70,3 +70,4 @@ function type() {
 }
 
 type();
+
