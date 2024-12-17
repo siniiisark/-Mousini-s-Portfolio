@@ -64,14 +64,19 @@
 
         #glowing-header {
             position: absolute;
-            top: 65%;
+            top: 60%;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 2rem;
+            font-size: 4rem;
+            font-weight: bold;
             color: #fff;
             text-align: center;
             z-index: 11;
+            letter-spacing: 2px;
             animation: header-glow 2s ease-in-out infinite alternate;
+            text-shadow: 
+                0 0 15px rgba(255, 255, 255, 0.7),
+                0 0 25px rgba(255, 255, 255, 0.4);
         }
 
         #typing-text {
@@ -99,48 +104,113 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
             gap: 15px;
             z-index: 11;
+            max-width: 90%;
+            width: auto;
         }
 
         .button {
-            background-color: #0b0b0b;
-            box-shadow: 0 0 20px white, 0 0 40px white;
-            color: white;
-            transform: translateY(-3px);
-            padding: 12px 24px;
-            border: 2px solid white;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
+            background-color: transparent;
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
             text-transform: uppercase;
-            cursor: pointer;
+            letter-spacing: 1px;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.2),
+                0 0 20px rgba(255, 255, 255, 0.1);
         }
 
         .button:hover {
-            background-color: #333;
-            box-shadow: 0 0 20px white, 0 0 40px white;
-            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 0 15px rgba(255, 255, 255, 0.5),
+                0 0 25px rgba(255, 255, 255, 0.3),
+                0 6px 12px rgba(0, 0, 0, 0.15);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
         }
 
         .button::before {
-            content: "";
+            content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-           
-            transform: translate(-50%, -50%) rotate(45deg);
-            z-index: 0;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.1), 
+                transparent
+            );
+            transition: all 0.5s ease;
+            z-index: 1;
         }
 
         .button:hover::before {
-            width: 0;
-            height: 0;
+            left: 100%;
+        }
+
+        .button:active {
+            transform: translateY(1px);
+            box-shadow: 
+                0 0 10px rgba(255, 255, 255, 0.3),
+                0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            #glowing-header {
+                top: 58%;
+                font-size: 2.5rem;
+                letter-spacing: 1px;
+            }
+
+            .button-container {
+                flex-wrap: wrap;
+                gap: 10px;
+                bottom: 3%;
+            }
+
+            .button {
+                flex-grow: 0;
+                width: auto;
+                padding: 8px 16px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #glowing-header {
+                top: 56%;
+                font-size: 2rem;
+                letter-spacing: 0.5px;
+            }
+
+            .button-container {
+                flex-direction: row;
+                gap: 8px;
+            }
+
+            .button {
+                flex-grow: 1;
+                max-width: calc(50% - 8px);
+            }
         }
 
         /* Animations */
@@ -214,28 +284,26 @@
         
     </div>
 
-    <script src="about.js"></script>
-
     <script>
         function createStars() {
             const container = document.getElementById('space-container');
-            const starCount = 1000; // Increased number of stars
+            const starCount = 1000;
             const colors = ['#ffffff', '#e6e6fa', '#f0f8ff', '#f5f5f5'];
 
             for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
 
-                // Random position in the viewport
+                
                 star.style.left = `${Math.random() * 100}%`;
                 star.style.top = `${Math.random() * 100}%`;
 
-                // Random size for stars
+             
                 const size = Math.random() * 3;
                 star.style.width = `${size}px`;
                 star.style.height = `${size}px`;
 
-                // Random animation duration
+              
                 const duration = 26 + Math.random() * 26;
                 star.style.animationDuration = `${duration}s`;
 
