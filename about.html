@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Starry Space Background</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000033;
+            font-family: 'Arial', sans-serif;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='white' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/%3E%3C/svg%3E"), auto;
+        }
+
+        #space-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            perspective: 1000px;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 5px rgba(255, 255, 255, 0.5),
+                0 0 10px rgba(255, 255, 255, 0.3);
+            opacity: 0.7;
+            transform-style: preserve-3d;
+            animation: 
+                complexTwinkle 3s ease-in-out infinite,
+                revolve 10s linear infinite;
+        }
+
+        #center-image {
+            position: absolute;
+            top: 42%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            z-index: 10;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        #center-image:hover {
+            box-shadow: 
+                0 0 20px white,
+                0 0 40px white,
+                0 0 60px white;
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        #glowing-header {
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            color: #fff;
+            text-align: center;
+            z-index: 11;
+            animation: header-glow 2s ease-in-out infinite alternate;
+        }
+
+        #typing-text {
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            color: #fff;
+            text-align: center;
+            z-index: 11;
+            height: 50px;
+        }
+
+        #typing-text-main {
+            display: inline-block;
+            border-right: 2px solid white;
+            animation: blink-caret 0.7s step-end infinite;
+        }
+
+        /* Animations */
+        @keyframes header-glow {
+            0% { 
+                text-shadow: 
+                    0 0 10px #fff,
+                    0 0 20px #fff,
+                    0 0 30px #fff;
+                color: #fff;
+            }
+            100% { 
+                text-shadow: 
+                    0 0 20px #fff,
+                    0 0 30px #fff,
+                    0 0 40px #fff;
+                color: #fff;
+            }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: white; }
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translate(-50%, -50%); 
+            }
+            50% { 
+                transform: translate(-50%, -60%); 
+            }
+        }
+
+        @keyframes complexTwinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes revolve {
+            0% {
+                transform: rotate(0deg) translate3d(100px, 0, 0) rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg) translate3d(100px, 0, 0) rotate(-360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="space-container"></div>
+    <img 
+        id="center-image" 
+        src="mee.jpg" 
+        alt="Centered Image"
+    >
+    <div id="glowing-header">Mousini Sarkar</div>
+    <div id="typing-text">
+        <span id="typing-text-main"></span>
+    </div>
+
+    <script src="about.js"></script>
+</body>
+</html>
