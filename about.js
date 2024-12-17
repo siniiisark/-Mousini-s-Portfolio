@@ -1,22 +1,22 @@
 function createStars() {
     const container = document.getElementById('space-container');
-    const starCount = 1000; // Increased number of stars
+    const starCount = 500; 
     const colors = ['#ffffff', '#e6e6fa', '#f0f8ff', '#f5f5f5'];
 
     for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.classList.add('star');
 
-        // Random position in the viewport
+       
         star.style.left = `${Math.random() * 100}%`;
         star.style.top = `${Math.random() * 100}%`;
 
-        // Random size for stars
+      
         const size = Math.random() * 3;
         star.style.width = `${size}px`;
         star.style.height = `${size}px`;
 
-        // Random animation duration
+     
         const duration = 26 + Math.random() * 26;
         star.style.animationDuration = `${duration}s`;
 
@@ -33,8 +33,8 @@ window.addEventListener('resize', () => {
 });
 
 const texts = [
-    'Web Developer',
-    'Blockchain',
+    'Web Developement',
+    'Blockchain Technology',
     'Game Dev using JavaScript', 
     'UI UX Enthusiast',
     'Learner',
