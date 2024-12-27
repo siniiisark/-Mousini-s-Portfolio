@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='white'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>") 12 12, auto;
+        }
+
+        body {
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 30px;
+            color: #fff;
+            text-shadow: 0 0 10px #fff;
+        }
+
+        .gallery {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90vh;
+        }
+
+        .modal-content img {
+            max-height: 90vh;
+            max-width: 100%;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #fff;
+            font-size: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <canvas class="stars"></canvas>
+    <h1>My Clicks</h1>
+
+    <div class="gallery">
+      
+        <img src="car.jpg" alt="Nature 1" onclick="openModal(this.src)">
+        <img src="sky.jpg" alt="Nature 2" onclick="openModal(this.src)">
+        <img src="clous.jpg" alt="Nature 3" onclick="openModal(this.src)">
+        <img src="college.jpg" alt="Nature 4" onclick="openModal(this.src)">
+        <img src="hibiscus.jpg" alt="Nature 5" onclick="openModal(this.src)">
+        <img src="kol.jpg" alt="Nature 6" onclick="openModal(this.src)">
+        <img src="chandelier.jpg" alt="Nature 7" onclick="openModal(this.src)">
+        <img src="roof.jpg" alt="Nature 8" onclick="openModal(this.src)">
+        <img src="roof2.jpg" alt="Nature 9" onclick="openModal(this.src)">
+        <img src="moon.jpg" alt="Nature 10" onclick="openModal(this.src)">
+        <img src="rose.jpg" alt="Nature 11" onclick="openModal(this.src)">
+        <img src="rose2.jpg" alt="Nature 12" onclick="openModal(this.src)">
+        <img src="whitie.jpg" alt="Nature 13" onclick="openModal(this.src)">
+        <img src="whitie2.jpg" alt="Nature 14" onclick="openModal(this.src)">
+        <img src="window.jpg" alt="Nature 15" onclick="openModal(this.src)">
+        
+       
+    </div>
+
+    
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">×</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Modal Image">
+        </div>
+    </div>
+
+    <script>
+        
+        const canvas = document.querySelector('.stars');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initStars();
+        }
+
+        class Star {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.radius = Math.random() * 1.5;
+                this.opacity = Math.random();
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        function initStars() {
+            stars = Array.from({length: 100}, () => new Star());
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => star.draw());
+            requestAnimationFrame(animateStars);
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        animateStars();
+
+       
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImg");
+
+        function openModal(imgSrc) {
+            modal.style.display = "block";
+            document.getElementById("modalImage").src = imgSrc;
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
