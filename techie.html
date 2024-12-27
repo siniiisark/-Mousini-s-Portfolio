@@ -32,6 +32,13 @@
             font-size: 36px;
         }
 
+        .instruction {
+            font-size: 18px;
+            color: #bbb;
+            text-shadow: 0 0 10px #fff;
+            margin-top: 10px;
+        }
+
         .education-gallery {
             display: flex;
             flex-direction: column;
@@ -53,29 +60,43 @@
             font-size: 24px;
             font-weight: bold;
             position: relative;
+            overflow: hidden;
             transition: box-shadow 0.3s ease, color 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
         .education-card img {
-            width: 250px; 
-            height: 250px; 
-            margin-bottom: 20px;
+            width: 100%; 
+            height: 100%; 
             object-fit: cover; 
+            transition: all 0.3s ease;
+            border-radius: 15px;
+        }
+
+        .education-card p {
+            font-size: 18px;
+            font-weight: normal;
+            display: none; 
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .education-card:hover img {
+            transform: scale(1.2); 
+        }
+
+        .education-card:hover p {
+            display: block; 
         }
 
         .education-card:hover {
             box-shadow: 0 8px 40px rgba(255, 255, 255, 0.5);
             color: #fff;
             text-shadow: 0 0 10px white;
-        }
-
-        .education-card p {
-            font-size: 18px;
-            font-weight: normal;
         }
 
         .stars {
@@ -87,29 +108,29 @@
             background-position: 0 0, 25px 25px;
             z-index: -1;
         }
-
     </style>
 </head>
 <body>
     <div class="stars" id="stars"></div>
     <h1>My Education</h1>
+    <p class="instruction">Hover over the images to see more details!</p>
 
     <div class="education-gallery">
         <div class="education-card">
             <img src="https://www.schooldekho.org/storage/gallery//ei2vkd2439ws8s8ogwk8kg484kgw8go.jpg" alt="Mary Immaculate School Logo">
-            Mary Immaculate School (LKG to Class 10)
+            <p>Mary Immaculate School (LKG to Class 10)</p>
             <p>I completed my schooling from Mary Immaculate School, where I followed the ICSE curriculum from LKG to Class 10. It was a time of foundational learning, and I developed a strong base in academics and life skills.</p>
         </div>
         
         <div class="education-card">
             <img src="https://cache.careers360.mobi/media/schools/social-media/media-gallery/25811/2020/9/4/Saidabad%20Manindra%20Chandra%20Vidyapith-College%20Building.jpg" alt="MCV Logo">
-            Higher Secondary from MCV (11th & 12th)
+            <p>Higher Secondary from MCV (11th & 12th)</p>
             <p>After completing my schooling, I pursued my Higher Secondary education at MCV, where I specialized in Science(with Computer Science). It was a phase of deeper learning and growth.</p>
         </div>
 
         <div class="education-card">
             <img src="college.jpg" alt="JISCE Logo">
-            University: JISCE
+            <p>University: JISCE</p>
             <p>I am currently pursuing my higher education at JISCE, focusing on Computer Science and Engineering. I am gaining valuable insights and skills for a successful career in tech.</p>
         </div>
     </div>
@@ -160,3 +181,4 @@
     </script>
 </body>
 </html>
+
