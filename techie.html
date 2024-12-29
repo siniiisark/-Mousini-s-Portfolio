@@ -9,10 +9,9 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' fill='white'><path d='M16 4C14.6 4 13.3 4.5 12.3 5.5L12 5.8L11.7 5.5C9.5 3.3 6 3.3 3.8 5.5C1.6 7.7 1.6 11.2 3.8 13.4L12 21.6L20.2 13.4C22.4 11.2 22.4 7.7 20.2 5.5C19.2 4.5 17.8 4 16 4Z'/></svg>") 16 16, auto;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><path d='M10 18.35l-1.45-1.32C3.4 12.36 0 9.28 0 5.5 0 2.42 2.42 0 5.5 0 7.24 0 8.91.81 10 2.09 11.09.81 12.76 0 14.5 0 17.58 0 20 2.42 20 5.5c0 3.78-3.4 6.86-8.55 11.54L10 18.35z' fill='white'/></svg>") 10 10, auto;
         }
 
-       
         body {
             background: #000;
             color: white;
@@ -23,127 +22,164 @@
             align-items: center;
             justify-content: flex-start;
             position: relative;
-            overflow: auto;
+            overflow-x: hidden;
         }
 
         h1 {
             text-align: center;
-            padding: 40px;
+            padding: 20px;
             color: #fff;
             text-shadow: 0 0 15px #fff;
-            font-size: 36px;
+            font-size: clamp(24px, 5vw, 36px);
+            margin-top: 20px;
         }
 
         .instruction {
-            font-size: 18px;
+            font-size: clamp(14px, 4vw, 18px);
             color: #bbb;
             text-shadow: 0 0 10px #fff;
-            margin-top: 10px;
+            margin: 10px;
+            text-align: center;
+            padding: 0 15px;
         }
 
         .education-gallery {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 40px;
-            padding: 20px;
-            position: relative;
-            margin-bottom: 40px;
+            gap: 20px;
+            padding: 15px;
+            width: 100%;
+            max-width: 100%;
         }
 
         .education-card {
             background: #080808;
             color: white;
-            padding: 40px;
+            padding: 0;
             border-radius: 15px;
             box-shadow: 0 6px 30px rgba(255, 255, 255, 0.3);
-            width: 700px;
-            height: 400px;
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
+            width: 90%;
+            max-width: 500px;
+            aspect-ratio: 16/12;
             position: relative;
             overflow: hidden;
-            transition: box-shadow 0.3s ease, color 0.3s ease;
+            transition: transform 0.3s ease;
+        }
+
+        .education-card:hover {
+            transform: translateY(-5px);
         }
 
         .education-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: all 0.3s ease;
-            border-radius: 15px;
+            transition: transform 0.3s ease;
         }
 
-        .education-card p {
-            font-size: 18px;
-            font-weight: normal;
-            display: none;
+        .education-card .card-content {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 20px;
-            border-radius: 10px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
         }
 
-        .education-card:hover img {
-            transform: scale(1.2);
+        .education-card .title {
+            font-size: clamp(16px, 4vw, 20px);
+            font-weight: bold;
+            margin-bottom: 8px;
         }
 
-        .education-card:hover p {
-            display: block;
+        .education-card .description {
+            font-size: clamp(14px, 3.5vw, 16px);
+            line-height: 1.4;
         }
 
-        .education-card:hover {
-            box-shadow: 0 8px 40px rgba(255, 255, 255, 0.5);
-            color: #fff;
-            text-shadow: 0 0 10px white;
+        
+        .education-card.active .card-content {
+            transform: translateY(0);
+        }
+
+        .education-card.active img {
+            transform: scale(1.1);
         }
 
         .stars {
             position: fixed;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px), radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px, 100px 100px;
-            background-position: 0 0, 25px 25px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px),
+                        radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 25px 25px, 50px 50px;
+            background-position: 0 0, 12.5px 12.5px;
             z-index: -1;
-            pointer-events: none;
         }
 
-        @media (max-width: 768px) {
-            .education-card {
-                width: 90%;
-                height: 350px;
+        @media (hover: hover) {
+            .education-card:hover .card-content {
+                transform: translateY(0);
             }
+
+            .education-card:hover img {
+                transform: scale(1.1);
+            }
+        }
+
+    
+        .education-card:hover {
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 20 20'><path d='M10 18.35l-1.45-1.32C3.4 12.36 0 9.28 0 5.5 0 2.42 2.42 0 5.5 0 7.24 0 8.91.81 10 2.09 11.09.81 12.76 0 14.5 0 17.58 0 20 2.42 20 5.5c0 3.78-3.4 6.86-8.55 11.54L10 18.35z' fill='pink'/></svg>") 12 12, pointer;
         }
     </style>
 </head>
 <body>
     <div class="stars" id="stars"></div>
     <h1>My Education</h1>
-    <p class="instruction">Hover over the images to see more details!</p>
+    <p class="instruction">Hover over the cards to see more details!</p>
 
     <div class="education-gallery">
         <div class="education-card">
-            <img src="https://www.schooldekho.org/storage/gallery//ei2vkd2439ws8s8ogwk8kg484kgw8go.jpg" alt="">
-            <p>I completed my schooling from Mary Immaculate School, where I followed the ICSE curriculum from LKG to Class 10. It was a time of foundational learning, and I developed a strong base in academics and life skills.</p>
+            <img src="https://www.schooldekho.org/storage/gallery//ei2vkd2439ws8s8ogwk8kg484kgw8go.jpg" alt="Mary Immaculate School Logo">
+            <div class="card-content">
+                <div class="title">Mary Immaculate School (LKG to Class 10)</div>
+                <div class="description">I completed my schooling from Mary Immaculate School, where I followed the ICSE curriculum from LKG to Class 10. It was a time of foundational learning, and I developed a strong base in academics and life skills.</div>
+            </div>
         </div>
         
         <div class="education-card">
-            <img src="https://cache.careers360.mobi/media/schools/social-media/media-gallery/25811/2020/9/4/Saidabad%20Manindra%20Chandra%20Vidyapith-College%20Building.jpg" alt="">
-            <p>After completing my schooling, I pursued my Higher Secondary education at MCV, where I specialized in Science(with Computer Science). It was a phase of deeper learning and growth.</p>
+            <img src="https://cache.careers360.mobi/media/schools/social-media/media-gallery/25811/2020/9/4/Saidabad%20Manindra%20Chandra%20Vidyapith-College%20Building.jpg" alt="MCV Logo">
+            <div class="card-content">
+                <div class="title">Higher Secondary from MCV (11th & 12th)</div>
+                <div class="description">After completing my schooling, I pursued my Higher Secondary education at MCV, where I specialized in Science(with Computer Science). It was a phase of deeper learning and growth.</div>
+            </div>
         </div>
 
         <div class="education-card">
-            <img src="college.jpg" alt="">
-            <p>I am currently pursuing my higher education at JISCE, focusing on Computer Science and Engineering. I am gaining valuable insights and skills for a successful career in tech.</p>
+            <img src="college.jpg" alt="JISCE Logo">
+            <div class="card-content">
+                <div class="title">University: JISCE</div>
+                <div class="description">I am currently pursuing my higher education at JISCE, focusing on Computer Science and Engineering. I am gaining valuable insights and skills for a successful career in tech.</div>
+            </div>
         </div>
     </div>
 
     <script>
+
+        document.querySelectorAll('.education-card').forEach(card => {
+            card.addEventListener('click', function() {
+              
+                document.querySelectorAll('.education-card').forEach(c => {
+                    if (c !== this) c.classList.remove('active');
+                });
+             
+                this.classList.toggle('active');
+            });
+        });
+
         const starsContainer = document.getElementById('stars');
 
         function createStar() {
@@ -154,7 +190,7 @@
             star.style.animation = `sparkle ${Math.random() * 2 + 1}s infinite`;
             star.style.left = `${Math.random() * 100}%`;
             star.style.top = `${Math.random() * 100}%`;
-            star.style.width = `${Math.random() * 3 + 1}px`;
+            star.style.width = `${Math.random() * 2 + 1}px`;
             star.style.height = star.style.width;
             starsContainer.appendChild(star);
         }
@@ -165,24 +201,15 @@
             }
         }
 
-        createStars(200);
+        createStars(100);
 
         const styleSheet = document.createElement("style");
         styleSheet.type = "text/css";
         styleSheet.innerText = `
             @keyframes sparkle {
-                0% {
-                    opacity: 0.2;
-                    transform: scale(0.8);
-                }
-                50% {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-                100% {
-                    opacity: 0.2;
-                    transform: scale(0.8);
-                }
+                0% { opacity: 0.2; transform: scale(0.8); }
+                50% { opacity: 1; transform: scale(1); }
+                100% { opacity: 0.2; transform: scale(0.8); }
             }
         `;
         document.head.appendChild(styleSheet);
