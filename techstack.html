@@ -20,26 +20,28 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            overflow: hidden;
             position: relative;
+            padding: 20px 10px;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
 
         h1 {
             text-align: center;
-            padding: 30px;
+            padding: 20px 10px;
             color: #fff;
             text-shadow: 0 0 10px #fff;
+            font-size: clamp(24px, 5vw, 32px);
+            margin-bottom: 20px;
         }
 
         .tech-gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            padding: 20px;
-            position: relative;
-            perspective: 1000px;
+            padding: 10px;
+            width: 100%;
+            max-width: 1200px;
         }
 
         .tech-card {
@@ -48,19 +50,25 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
-            width: 200px;
             text-align: center;
             font-size: 18px;
             font-weight: bold;
             position: relative;
             animation: float 2s ease-in-out infinite;
             transition: box-shadow 0.3s ease, color 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
         }
 
         .tech-card img {
-            width: 60px;
-            height: 60px;
+            width: clamp(40px, 8vw, 60px);
+            height: clamp(40px, 8vw, 60px);
             margin-bottom: 10px;
+            object-fit: contain;
         }
 
         .tech-card:hover {
@@ -70,29 +78,29 @@
         }
 
         .tech-card p {
-            font-size: 14px;
+            font-size: clamp(12px, 3vw, 14px);
             font-weight: normal;
+            margin-top: 10px;
+            line-height: 1.4;
         }
 
-        
         @keyframes float {
-            0% {
+            0%, 100% {
                 transform: translateY(0);
             }
             50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0);
+                transform: translateY(-5px);
             }
         }
 
         .stars {
-            position: absolute;
+            position: fixed;
             width: 100%;
             height: 100%;
             z-index: -1;
             pointer-events: none;
+            top: 0;
+            left: 0;
         }
 
         .star {
@@ -104,7 +112,7 @@
         }
 
         @keyframes sparkle {
-            0% {
+            0%, 100% {
                 transform: scale(1);
                 opacity: 0.5;
             }
@@ -112,8 +120,37 @@
                 transform: scale(1.2);
                 opacity: 1;
             }
-            100% {
-                transform: scale(1);
+        }
+
+        @media (max-width: 600px) {
+            .tech-gallery {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+
+            .tech-card {
+                min-height: 180px;
+                padding: 15px;
+            }
+
+            body {
+                padding: 10px 5px;
+            }
+        }
+
+        @media (min-width: 601px) and (max-width: 1024px) {
+            .tech-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .tech-card {
+                animation: none;
+            }
+            
+            .star {
+                animation: none;
                 opacity: 0.5;
             }
         }
@@ -151,24 +188,32 @@
         <div class="tech-card">
             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python Logo">
             Python
-           
+            <p>I utilize Python for backend development and automation, creating efficient and scalable solutions.</p>
+        </div>
+        <div class="tech-card">
+            <img src="data:image/png;base64,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" alt="Git Logo">
+            Git
+            <p>I'm proficient in Git version control, managing code changes, branching strategies, and collaborative development workflows.</p>
+        </div>
+        <div class="tech-card">
+            <img src="data:image/png;base64,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" alt="GitHub Logo">
+            GitHub
+            <p>I actively use GitHub for project hosting, collaboration, CI/CD workflows, and contributing to open-source communities.</p>
         </div>
     </div>
 
     <script>
-    
         function createStars() {
             const starsContainer = document.getElementById('stars');
-            const numberOfStars = 200; 
+            const numberOfStars = Math.min(200, window.innerWidth / 3);
 
             for (let i = 0; i < numberOfStars; i++) {
                 const star = document.createElement('div');
                 star.classList.add('star');
-
-              
-                const size = Math.random() * 3 + 1; 
-                const xPosition = Math.random() * window.innerWidth; 
-                const yPosition = Math.random() * window.innerHeight; 
+                
+                const size = Math.random() * 2 + 1;
+                const xPosition = Math.random() * window.innerWidth;
+                const yPosition = Math.random() * window.innerHeight;
                 const animationDelay = Math.random() * 2 + 's';
 
                 star.style.width = size + 'px';
@@ -180,7 +225,19 @@
                 starsContainer.appendChild(star);
             }
         }
+
         createStars();
+
+
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const starsContainer = document.getElementById('stars');
+                starsContainer.innerHTML = '';
+                createStars();
+            }, 250);
+        });
     </script>
 </body>
 </html>
