@@ -3,172 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Contacts</title>
+    <meta name="description" content="Contacts - GitHub, LinkedIn, and Email">
+    <title>Contact Me</title>
     <style>
+        :root {
+            --primary-color: #ededf3;
+            --hover-color: #f5f5fb;
+            --bg-color: #0a0a0a;
+            --text-color: #fff;
+            --card-bg: rgba(30, 30, 30, 0.6);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='white' viewBox='0 0 16 16'><path d='M8 14.408s6-5.784 6-8.592c0-2.808-2.688-4.32-6-1.152-3.312-3.168-6-1.656-6 1.152 0 2.808 6 8.592 6 8.592z'/></svg>") 12 12, auto;
         }
 
         body {
-            background: #000;
-            color: white;
-            font-family: Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            font-family: system-ui, -apple-system, sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
             position: relative;
-            overflow: auto;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
         }
 
         h1 {
             text-align: center;
-            padding: 40px;
-            color: #fff;
-            text-shadow: 0 0 15px #fff;
-            font-size: 36px;
+            padding: 2rem 0;
+            font-size: clamp(2rem, 5vw, 3rem);
+            background: linear-gradient(135deg, var(--primary-color), var(--hover-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
         }
 
         .instruction {
-            font-size: 18px;
-            color: #bbb;
-            text-shadow: 0 0 10px #fff;
-            margin-top: 10px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #9ca3af;
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease-out;
         }
 
         .contact-list {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            padding: 20px;
+            display: grid;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
         .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 24px;
-            font-weight: bold;
-            color: white;
-            text-shadow: 0 0 10px #fff;
-            padding: 10px 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            width: 300px;
-            transition: all 0.3s ease;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .contact-item:hover {
-            background-color: #444;
-            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.2);
         }
 
-        .contact-item a {
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.5rem;
             text-decoration: none;
-            color: white;
-            font-size: 20px;
+            color: var(--text-color);
+            font-size: 1.1rem;
+            font-weight: 500;
         }
 
-        .contact-item img {
-            width: 40px;
-            height: 40px;
-            transition: all 0.3s ease;
+        a:hover, 
+        button:hover,
+        [role="button"]:hover {
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='purple' viewBox='0 0 16 16'><path d='M8 14.408s6-5.784 6-8.592c0-2.808-2.688-4.32-6-1.152-3.312-3.168-6-1.656-6 1.152 0 2.808 6 8.592 6 8.592z'/></svg>") 12 12, pointer;
         }
 
-        .contact-item:hover img {
-            transform: scale(1.2);
+        .contact-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .stars {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px), radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px, 100px 100px;
-            background-position: 0 0, 25px 25px;
-            z-index: -1;
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .contact-link {
+                padding: 0.75rem 1rem;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="stars" id="stars"></div>
-    <h1>My Contacts</h1>
-    <p class="instruction">Click on the icons to visit my profiles and contact me!</p>
-
-    <div class="contact-list">
-        
-        <div class="contact-item">
-            <a href="https://github.com/siniiisark" target="_blank">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub Logo">
-                GitHub - siniiisark
-            </a>
-        </div>
-
+    <canvas class="stars" id="starsCanvas"></canvas>
     
-        <div class="contact-item">
-            <a href="https://www.linkedin.com/in/mousini-sarkar-4a7252303?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank">
-                <img src="data:image/png;base64,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" alt="LinkedIn Logo">
-                Mousini Sarkar
-            </a>
-        </div>
+    <div class="container">
+        <h1>Contact Me</h1>
+        <p class="instruction">Connect with me on social media or send me an email</p>
 
-    
-        <div class="contact-item">
-            <a href="mailto:mousinisarkar05@gmail.com">
-                <img src="data:image/png;base64,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" alt="Email Icon">
-                Write an email to me
-            </a>
+        <div class="contact-list">
+            <div class="contact-item">
+                <a href="https://github.com/siniiisark" target="_blank" rel="noopener noreferrer" class="contact-link">
+                    <img class="contact-icon" src="data:image/png;base64,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" alt="GitHub" >
+                    <span>GitHub Profile</span>
+                </a>
+            </div>
+
+            <div class="contact-item">
+                <a href="https://www.linkedin.com/in/mousini-sarkar-4a7252303" target="_blank" rel="noopener noreferrer" class="contact-link">
+                    <img class="contact-icon" src="https://cdn.cdnlogo.com/logos/l/66/linkedin-icon.svg" alt="LinkedIn" >
+                    <span>LinkedIn Profile</span>
+                </a>
+            </div>
+
+            <div class="contact-item">
+                <a href="mailto:mousinisarkar05@gmail.com" class="contact-link">
+                    <img class="contact-icon" src="https://cdn.cdnlogo.com/logos/g/24/gmail-icon.svg" alt="Email" >
+                    <span>Send Email</span>
+                </a>
+            </div>
         </div>
-        
     </div>
 
     <script>
-        const starsContainer = document.getElementById('stars');
-
-        function createStar() {
-            const star = document.createElement('div');
-            star.style.position = 'absolute';
-            star.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
-            star.style.borderRadius = '50%';
-            star.style.animation = `sparkle ${Math.random() * 2 + 1}s infinite`;
-            star.style.left = `${Math.random() * 100}%`;
-            star.style.top = `${Math.random() * 100}%`;
-            star.style.width = `${Math.random() * 3 + 1}px`;
-            star.style.height = star.style.width;
-            starsContainer.appendChild(star);
-        }
-
-        function createStars(count) {
-            for (let i = 0; i < count; i++) {
-                createStar();
+        class StarField {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.stars = [];
+                this.resize();
+                this.init();
+                
+                window.addEventListener('resize', () => this.resize());
+                this.animate();
             }
-        }
 
-        createStars(200);
+            resize() {
+                this.width = this.canvas.width = window.innerWidth;
+                this.height = this.canvas.height = window.innerHeight;
+            }
 
-        const styleSheet = document.createElement("style");
-        styleSheet.type = "text/css";
-        styleSheet.innerText = `
-            @keyframes sparkle {
-                0% {
-                    opacity: 0.2;
-                    transform: scale(0.8);
-                }
-                50% {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-                100% {
-                    opacity: 0.2;
-                    transform: scale(0.8);
+            init() {
+                const numberOfStars = Math.floor((this.width * this.height) / 3000);
+                for (let i = 0; i < numberOfStars; i++) {
+                    this.stars.push({
+                        x: Math.random() * this.width,
+                        y: Math.random() * this.height,
+                        size: Math.random() * 2,
+                        speed: Math.random() * 0.5
+                    });
                 }
             }
-        `;
-        document.head.appendChild(styleSheet);
+
+            draw() {
+                this.ctx.clearRect(0, 0, this.width, this.height);
+                this.ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                
+                this.stars.forEach(star => {
+                    this.ctx.beginPath();
+                    this.ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    star.y += star.speed;
+                    if (star.y > this.height) {
+                        star.y = 0;
+                        star.x = Math.random() * this.width;
+                    }
+                });
+            }
+
+            animate() {
+                this.draw();
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        new StarField(document.getElementById('starsCanvas'));
     </script>
 </body>
 </html>
