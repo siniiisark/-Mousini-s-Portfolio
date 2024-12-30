@@ -128,16 +128,21 @@
             opacity: 0;
             transition: opacity 1s;
             text-shadow: white;
+            position: relative;
+            z-index: 50;
+            padding-left: 80px;
         }
 
         .section {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 20px;
             text-align: center;
+            width: 100%;
+            position: relative;
         }
 
         .section h1 {
@@ -147,15 +152,18 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             text-shadow: 0 0 15px rgba(0, 5, 14, 0.5);
+            margin-bottom: 2rem;
         }
 
         .section p {
             font-family: 'Chakra Petch', sans-serif;
             font-size: 1.2rem;
             color: #b0c4de;
-            max-width: 600px;
+            max-width: 800px;
             line-height: 1.6;
             position: relative;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
         #typed-text {
@@ -168,6 +176,7 @@
             height: 1.2rem;
             background-color: #87ceeb;
             animation: blink 0.7s infinite;
+            margin-left: 2px;
         }
 
         @keyframes blink {
@@ -177,12 +186,26 @@
 
         .menu-icon {
             position: fixed;
-            top: 10px;
-            left: 10px;
+            top: 20px;
+            left: 20px;
             font-size: 2rem;
             color: #dfe6e9;
             z-index: 200;
             font-family: 'Chakra Petch', sans-serif;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(1, 3, 11, 0.5);
+            border-radius: 8px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .menu-icon:hover {
+            background: rgba(1, 3, 11, 0.8);
+            transform: scale(1.1);
         }
 
         nav {
@@ -198,6 +221,7 @@
             align-items: center;
             transition: left 0.3s;
             backdrop-filter: blur(10px);
+            z-index: 100;
         }
 
         nav a {
@@ -209,16 +233,48 @@
             transition: color 0.3s, transform 0.2s;
             text-transform: uppercase;
             letter-spacing: 2px;
+            padding: 10px 20px;
+            border-radius: 4px;
         }
 
         nav a:hover {
             color: #87ceeb;
             transform: scale(1.1);
             text-shadow: 0 0 10px rgba(135, 206, 235, 0.5);
+            background: rgba(135, 206, 235, 0.1);
         }
 
         nav.active {
             left: 0;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            #main-content {
+                padding-left: 20px;
+            }
+            
+            .section h1 {
+                font-size: 2.5rem;
+            }
+
+            #splash-text {
+                font-size: 8vw;
+            }
+
+            .section p {
+                font-size: 1rem;
+                padding: 0 15px;
+            }
+
+            nav {
+                width: 200px;
+            }
+
+            nav a {
+                font-size: 1.2rem;
+                margin: 10px 0;
+            }
         }
     </style>
 </head>
@@ -227,6 +283,7 @@
     <svg id="heart-cursor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
     </svg>
+    
     <div id="intro-overlay">
         <div id="splash-text">Mousini's Portfolio</div>
     </div>
@@ -235,8 +292,8 @@
 
     <nav id="nav-menu">
         <a href="about.html">About Me</a>
-        <a href="techstack.html">Techstack</a>
-        <a href="techie.html">Education</a>
+        <a href="techstack.html">Education</a>
+        <a href="techie.html">Techstack</a>
         <a href="hobbies.html">Hobbies</a>
         <a href="projects.html">Projects</a>
         <a href="contact.html">Contact Me</a>
@@ -263,13 +320,12 @@
             const heartCursor = document.getElementById('heart-cursor');
             const typedText = document.getElementById('typed-text');
 
-            
             document.addEventListener('mousemove', (e) => {
                 heartCursor.style.left = `${e.clientX}px`;
                 heartCursor.style.top = `${e.clientY}px`;
             });
 
-            
+           
             const createStars = () => {
                 for (let i = 0; i < 350; i++) {
                     const star = document.createElement('div');
@@ -285,8 +341,6 @@
             };
 
             createStars();
-
-            
             setTimeout(() => {
                 splashText.style.opacity = '1';
                 splashText.style.transform = 'scale(1)';
@@ -298,25 +352,29 @@
 
             setTimeout(() => {
                 mainContent.style.display = 'block';
-                mainContent.style.opacity = '1';
+                setTimeout(() => {
+                    mainContent.style.opacity = '1';
+                }, 50);
                 introOverlay.style.display = 'none';
                 startTypingEffect();
             }, 3000);
-
-           
             menuToggle.addEventListener('click', () => {
                 navMenu.classList.toggle('active');
             });
-
+            document.addEventListener('click', (e) => {
+                if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                    navMenu.classList.remove('active');
+                }
+            });
             function startTypingEffect() {
-                const text = "Explore my digital universe, one project at a time. Navigating through lines of code like a spacecraft traversing star systems.";
+                const text = "Exploring the digital universe, one project at a time. Navigating through lines of code like a spacecraft traversing star systems.";
                 let index = 0;
 
                 function type() {
                     if (index < text.length) {
                         typedText.textContent += text.charAt(index);
                         index++;
-                        setTimeout(type, 50); 
+                        setTimeout(type, 50);
                     }
                 }
 
